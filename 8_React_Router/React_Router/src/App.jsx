@@ -1,34 +1,45 @@
 import "./App.css";
-import React, { useEffect, useState } from "react";
+
+// 1 - config react router, sem links
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+// pages
+import Home from "./pages/home";
+import About from "./pages/About";
+
+// 2 - adicionando links
+// components
+import Navbar from "./components/Navbar";
+import Product from "./pages/Product";
+import Info from "./pages/Info";
+import NotFound from "./pages/NotFound";
+import Search from "./pages/Search";
+import { SearchForm } from "./components/SearchForm";
 
 function App() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    // Função para buscar os dados
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/products");
-        const data = await response.json();
-        setProducts(data); // Armazena os dados no estado
-      } catch (error) {
-        console.error("Erro ao buscar os produtos:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []); // O array vazio [] significa que o useEffect será executado uma vez ao montar o componente
-
   return (
-    <div>
-      <h1>Lista de Produtos</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - R${product.price}
-          </li>
-        ))}
-      </ul>
+    <div className="App">
+      <h1>React Router</h1>
+      <BrowserRouter>
+        <Navbar />
+        {/* 9 - search */}
+        <SearchForm />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="about" element={<About />} />
+          {/* 6 - nested route */}
+          <Route path="/products/:id/info" element={<Info />} />
+          {/* 4 - rota dinamica */}
+          <Route path="/products/:id" element={<Product />} />
+
+          {/* 9 search params */}
+          <Route path="/search" element={<Search />} />
+          {/* 10 - redirect */}
+          <Route path="/company" element={<Navigate to="/about" />} />
+          {/* 7  - no match route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
