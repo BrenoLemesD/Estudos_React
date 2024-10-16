@@ -1,28 +1,30 @@
 import "./App.css";
+
+// 1 - config react router, sem links
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// pages
 import Home from "./pages/Home";
-import Products from "./pages/Products";
 import About from "./pages/About";
-import NavBar from "./Components/NavBar";
-import { useState } from "react";
+import Products from "./pages/Products";
+
+// 2 - adicionando links
+// components
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div className="App">
-        <h1>Teste</h1>
-        <BrowserRouter>
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </BrowserRouter>
-      </div>
-    </>
+    <div className="App">
+      <h1>Context</h1>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="products" element={<Products />} />
+          <Route path="about" element={<About />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
